@@ -1,0 +1,76 @@
+@charset "ISO-8859-1";
+
+body {
+	background-image:
+		url("https://raw.githubusercontent.com/riyadhultaher/covidappointments.github.io/main/HomePage%20Background.png");
+	background-size: cover;
+	background-attachment: fixed;
+	padding: 10px;
+	display: flex;
+}
+
+#message {
+	display: flex;
+	position: relative;
+	font-family: 'Source Sans Pro', sans-serif;
+	top: 130px;
+}
+
+#messageButton {
+	display: flex;
+	position: absolute;
+	top: 120px;
+	background-color: #1f1f1f;
+	padding: 15px;
+	color: white;
+	font-family: 'Source Sans Pro', sans-serif;
+	text-align: center;
+}
+
+#messageButton:hover, .messageButton:focus {
+	background-color: gray;
+	cursor: pointer;
+}
+
+.dropbtn {
+	background-color: #fafafa;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: black;
+	padding: 16px;
+	font-size: 20px;
+	border: none;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+	color: silver;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #fafafa;
+	min-width: 160px;
+	overflow: auto;
+	z-index: 1;
+}
+
+.dropdown-content a {
+	color: black;
+	font-family: 'Source Sans Pro', sans-serif;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown a:hover {
+	color: silver;
+}
+
+.show {
+	display: block;
+}
