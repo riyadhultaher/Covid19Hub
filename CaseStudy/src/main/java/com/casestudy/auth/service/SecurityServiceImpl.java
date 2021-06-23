@@ -10,6 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+/*
+ * This class is defined through Spring Security.
+ * It uses the SecurityContextHolder to find out
+ * what user is currently logged in. This method is
+ * necessary when it comes to adding or deleting a 
+ * user state, or changing a user password. 
+ */
 @Service
 public class SecurityServiceImpl implements SecurityService {
 	@Autowired

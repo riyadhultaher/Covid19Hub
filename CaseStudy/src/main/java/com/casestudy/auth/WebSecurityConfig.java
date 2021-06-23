@@ -12,6 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/*
+ * The WebSecurity class will enable the BCrypt
+ * encryption to authenticate users as well as 
+ * allow the login page to act as the first mapped
+ * page.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

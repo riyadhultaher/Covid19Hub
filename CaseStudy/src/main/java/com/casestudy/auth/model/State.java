@@ -5,6 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/*
+ * This model represents one state that a user can have.
+ * States can be added to a user's account via a list and
+ * is connected to users with a ManyToMany relationship.
+ * The state model has an id, a name, and an associated
+ * hyperlink that takes the user to the website for that
+ * respective state.
+ */
 @Entity
 public class State {
 	@Id
@@ -13,6 +21,8 @@ public class State {
 	private Long id;
 
 	private String name;
+	
+	@Transient
 	private String hyperlink;
 
 	@ManyToMany(mappedBy = "states")

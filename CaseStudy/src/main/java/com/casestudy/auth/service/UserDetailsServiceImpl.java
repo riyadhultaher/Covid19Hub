@@ -15,6 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+/*
+ * This class is used by Spring Security in order to load
+ * a user account based on their username.It uses the user
+ * repository to find the user prior to loading it.
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired

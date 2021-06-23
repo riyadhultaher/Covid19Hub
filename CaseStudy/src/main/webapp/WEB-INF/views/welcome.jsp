@@ -22,10 +22,20 @@ table {
 	font-family: 'Source Sans Pro', sans-serif;
 	border-spacing: 10px;
 	top: 240px;
-	left: 88px;
+	left: 200px;
 }
 
 #logoutbutton {
+	cursor: pointer;
+}
+
+#deleteAccount {
+	color: red;
+	cursor: pointer;
+}
+
+#deleteAccount:hover, .messageButton:focus {
+	color: pink;
 	cursor: pointer;
 }
 </style>
@@ -45,7 +55,9 @@ table {
 			<a href="${contextPath}/options">Options</a> <a
 				href="${contextPath}/about">About</a> <a
 				href="${contextPath}/contact">Contact</a> <a id="logoutbutton"
-				onclick="document.forms['logoutForm'].submit()">Logout</a>
+				onclick="document.forms['logoutForm'].submit()">Logout</a> <a
+				id="deleteAccount" href="deleteAccount"
+				onclick="document.forms['logoutForm'].submit()">Delete Account</a>
 		</div>
 	</div>
 

@@ -8,6 +8,13 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/*
+ * The validator class is used by Spring Security in
+ * order to validate that a user's username and password
+ * fit the designated criteria. The checkDuplicate method
+ * is used specifically to check if a user account already
+ * exists in the database.
+ */
 @Component
 public class UserValidator implements Validator {
 	@Autowired

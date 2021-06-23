@@ -11,7 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.casestudy.auth.model.State;
 import com.casestudy.auth.repository.StateRepository;
 import com.casestudy.auth.repository.UserRepository;
+import com.casestudy.auth.utilities.ProgramException;
 
+/*
+ * This class implements the StateService DAO
+ * interface. The state and user repositories are
+ * autowired into the class.
+ */
 @Service
 public class StateServiceImpl implements StateService {
 
@@ -21,8 +27,15 @@ public class StateServiceImpl implements StateService {
 	@Autowired
 	UserRepository userRepo;
 
+	/*
+	 * This method will add all the states to the
+	 * database as soon as a user hits the registration
+	 * page. If the state table is already populated then
+	 * this method will not try to attempt to persist the 
+	 * data again.
+	 */
 	@Override
-	public List<String> addStates() {
+	public List<String> addStates() throws ProgramException {
 
 		List<String> list;
 
@@ -33,6 +46,7 @@ public class StateServiceImpl implements StateService {
 				"New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
 				"Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah",
 				"Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming");
+		
 		ArrayList<String> allStates = new ArrayList<String>(list);
 
 		if (findAll().isEmpty()) {
@@ -45,27 +59,48 @@ public class StateServiceImpl implements StateService {
 		return allStates;
 	}
 
+	/*
+	 * This method saves a state to a user account within
+	 * the database.
+	 */
 	@Override
 	public void save(State state) {
 		repo.save(state);
 	}
 
+	/*
+	 * This method finds all states meant to persist in the
+	 * state table and returns the result.
+	 */
 	@Override
 	public List<State> findAll() {
 		return repo.findAll();
 	}
 
+	/*
+	 * This method finds a specific state within the state
+	 * table.
+	 */
 	@Override
 	public State findByName(String name) {
 		return repo.findByName(name);
 	}
 
+	/*
+	 * This method deletes a state from a user account based
+	 * on the state id.
+	 */
 	@Override
 	@Transactional
 	public void delete(State state) {
 		repo.deleteById(state.getId());
 	}
 
+	/*
+	 * This method assigns hyperlinks to the respective
+	 * states, linking to that state's official COVID 19
+	 * website.
+	 */
 	@Override
 	public void assignHyperlink(State state) {
 		String name = state.getName();

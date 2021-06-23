@@ -5,6 +5,7 @@ import com.casestudy.auth.model.User;
 import com.casestudy.auth.service.SecurityService;
 import com.casestudy.auth.service.StateService;
 import com.casestudy.auth.service.UserService;
+import com.casestudy.auth.utilities.ProgramException;
 import com.casestudy.auth.validator.UserValidator;
 
 import java.util.List;
@@ -17,6 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+/*
+ * The user controller maps all pages to their
+ * respective functions.
+ */
 @Controller
 public class UserController {
 	@Autowired
@@ -31,8 +36,13 @@ public class UserController {
 	@Autowired
 	private UserValidator userValidator;
 
+	/*
+	 * This mapping occurs when a user clicks on New User. It populates the state
+	 * table in the database and sends the user information to the respective JSP
+	 * page.
+	 */
 	@GetMapping("/registration")
-	public String registration(Model model) {
+	public String registration(Model model) throws ProgramException {
 		List<String> allStates = stateService.addStates();
 
 		model.addAttribute("userForm", new User());
@@ -40,8 +50,14 @@ public class UserController {
 		return "registration";
 	}
 
+	/*
+	 * This mapping takes the user information and binds it into an entity within
+	 * the database, as long as there are no binding errors. It then redirects to
+	 * that specific user's homepage.
+	 */
 	@PostMapping("/registration")
-	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model)
+			throws ProgramException {
 
 		userValidator.validate(userForm, bindingResult);
 		userValidator.checkDuplicate(userForm, bindingResult);
@@ -61,6 +77,11 @@ public class UserController {
 		return "redirect:/welcome";
 	}
 
+	/*
+	 * This mapping is the first page a user is displayed upon loading the program.
+	 * It allows them to log into their account and will inform them if their
+	 * username or password is invalid, redirecting back to the same page.
+	 */
 	@GetMapping("/login")
 	public String login(Model model, String error, String logout) {
 		if (error != null) {
@@ -70,6 +91,10 @@ public class UserController {
 		return "login";
 	}
 
+	/*
+	 * This mapping displays the logged in user's homepage. It populates a list of
+	 * states based on what the user has chosen.
+	 */
 	@GetMapping({ "/", "/welcome" })
 	public String welcome(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -89,6 +114,11 @@ public class UserController {
 		return "welcome";
 	}
 
+	/*
+	 * This mapping simply deletes a state from that user's account. It is
+	 * represented as a button next to that state and redirects back to the homepage
+	 * with the updated list.
+	 */
 	@RequestMapping("/delete")
 	public String deleteState(@RequestParam String name) {
 		State state = stateService.findByName(name);
@@ -96,11 +126,20 @@ public class UserController {
 		return "redirect:/welcome";
 	}
 
+	/*
+	 * This mapping presents the options page which allows a user to select to add a
+	 * state or change their password.
+	 */
 	@GetMapping({ "/options" })
 	public String options(Model model) {
 		return "options";
 	}
 
+	/*
+	 * This mapping displays textboxes to allow a user to change their password and
+	 * confirm that the passwords match. Their password must still fit the Bcrypt
+	 * criteria.
+	 */
 	@GetMapping({ "/changePassword" })
 	public String changePassword(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -116,6 +155,11 @@ public class UserController {
 		return "changePassword";
 	}
 
+	/*
+	 * This mapping takes the user's new password and persists the encrypted form
+	 * into the database, as long as it fits Bcrypt criteria. It then redirects the
+	 * user back to the homepage.
+	 */
 	@PostMapping({ "/changePassword" })
 	public String changePassword(@ModelAttribute("user") User user, BindingResult bindingResult,
 			@RequestParam("password") String password, @RequestParam("passwordConfirm") String passwordConfirm) {
@@ -141,8 +185,13 @@ public class UserController {
 		return "redirect:/welcome";
 	}
 
+	/*
+	 * This mapping displays a page allowing a user to select a new state to add to
+	 * their account from a drop down menu. States that already exist in their
+	 * account will not be displayed.
+	 */
 	@GetMapping({ "/addState" })
-	public String addState(Model model) {
+	public String addState(Model model) throws ProgramException {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<State> listStates = null;
 		List<String> allStates = stateService.addStates();
@@ -165,6 +214,11 @@ public class UserController {
 		return "addState";
 	}
 
+	/*
+	 * This mapping takes the state that the user selected and adds it to their list
+	 * of states. The user will then be redirected to the homepage and displayed
+	 * their updated list.
+	 */
 	@PostMapping({ "/addState" })
 	public String addState(@ModelAttribute State state) {
 
@@ -185,16 +239,35 @@ public class UserController {
 		return "redirect:/welcome";
 	}
 
+	@GetMapping({ "/deleteAccount" })
+	public String deleteAccount(@ModelAttribute("user") User user) {
+		userService.delete(user);
+		return "redirect:/login";
+	}
+
+	/*
+	 * This mapping takes a user to the contact page where they can input their
+	 * email into a basic form. The email is not actually received anywhere.
+	 */
 	@GetMapping({ "/contact" })
 	public String contact(Model model) {
 		return "contact";
 	}
 
+	/*
+	 * This mapping is displayed after a user submits from the contact page. It
+	 * displays a table of contributers. The values from the previous page do not
+	 * actually go anywhere.
+	 */
 	@GetMapping({ "/confirmation" })
 	public String confirmation(Model model) {
 		return "confirmation";
 	}
 
+	/*
+	 * This mapping shows a static page that gives more information regarding the
+	 * project.
+	 */
 	@GetMapping({ "/about" })
 	public String about(Model model) {
 		return "about";

@@ -25,6 +25,10 @@ public class UserServiceTest {
 	UserServiceImpl service;
 	static long testId;
 	
+	/*
+	 * This test will test that a user is created and
+	 * saved into the database.
+	 */
 	@Test
 	@Order (1)
 	void testSave () {
@@ -34,6 +38,10 @@ public class UserServiceTest {
 		testId = user.getId();
 		assertNotNull(user.getId());
 	}
+	
+	/*
+	 * This test will find the desired user based on its username.
+	 */
 	@Test
 	@Order (2)
 	void testFindByUsername () {

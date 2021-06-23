@@ -5,6 +5,15 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * The user model represents one individual user in
+ * the database. The user can add states to their account
+ * in order to navigate to that respective state's website.
+ * This is mapped with a ManyToMany relationshup with the
+ * state model. The user model consists of an id, a username,
+ * a password, and password confirm which does not persist in
+ * the database.
+ */
 @Entity
 //@Table(name = "user")
 public class User {
