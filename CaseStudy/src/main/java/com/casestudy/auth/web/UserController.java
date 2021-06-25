@@ -43,6 +43,7 @@ public class UserController {
 	 */
 	@GetMapping("/registration")
 	public String registration(Model model) throws ProgramException {
+
 		List<String> allStates = stateService.addStates();
 
 		model.addAttribute("userForm", new User());
@@ -52,8 +53,9 @@ public class UserController {
 
 	/*
 	 * This mapping takes the user information and binds it into an entity within
-	 * the database, as long as there are no binding errors. It then redirects to
-	 * that specific user's homepage.
+	 * the database, as long as there are no binding errors. This will throw an exception
+	 * and display a message if there is an error. It then redirects to that specific user's 
+	 * homepage.
 	 */
 	@PostMapping("/registration")
 	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model)
@@ -63,10 +65,14 @@ public class UserController {
 		userValidator.checkDuplicate(userForm, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			ProgramException e = new ProgramException (null);
+			String errorMessage = e.getMessage();
 			List<String> allStates = stateService.addStates();
+			model.addAttribute("errorMessage", errorMessage);
 			model.addAttribute("allStates", allStates);
 			return "registration";
 		}
+
 		State userState = userForm.getStates().get(0);
 		userForm.getStates().remove(0);
 		userForm.getStates().add(stateService.findByName(userState.getName()));
@@ -87,7 +93,6 @@ public class UserController {
 		if (error != null) {
 			model.addAttribute("error", "Your username and password is invalid.");
 		}
-
 		return "login";
 	}
 
@@ -157,12 +162,12 @@ public class UserController {
 
 	/*
 	 * This mapping takes the user's new password and persists the encrypted form
-	 * into the database, as long as it fits Bcrypt criteria. It then redirects the
-	 * user back to the homepage.
+	 * into the database, as long as it fits Bcrypt criteria. This will throw an exception
+	 * and display a message if there is an error.It then redirects the user back to the homepage.
 	 */
 	@PostMapping({ "/changePassword" })
 	public String changePassword(@ModelAttribute("user") User user, BindingResult bindingResult,
-			@RequestParam("password") String password, @RequestParam("passwordConfirm") String passwordConfirm) {
+			@RequestParam("password") String password, @RequestParam("passwordConfirm") String passwordConfirm, Model model) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -177,6 +182,10 @@ public class UserController {
 		userValidator.validate(user, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			ProgramException e = new ProgramException (null);
+			String errorMessage = e.getMessage();
+			model.addAttribute("errorMessage", errorMessage);
+			
 			return "changePassword";
 		}
 

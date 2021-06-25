@@ -30,6 +30,14 @@ form {
 #message {
 	left: 200px;
 }
+
+#errorMessage {
+	position: relative;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: red;
+	top: 200px;
+	right: 430px;
+}
 </style>
 </head>
 <body>
@@ -57,5 +65,6 @@ form {
 		</div>
 		<button id="messageButton" type="submit">SUBMIT</button>
 	</form:form>
+	<span id="errorMessage">${errorMessage}</span>
 </body>
 </html>

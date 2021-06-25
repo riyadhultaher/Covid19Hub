@@ -23,6 +23,13 @@ form {
 	font-family: 'Source Sans Pro', sans-serif;
 	top: 150px;
 }
+
+#errorMessage {
+	position: relative;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: red;
+	top: 130px;
+}
 </style>
 </head>
 
@@ -40,11 +47,12 @@ form {
 			Please create a username and password below to get started. <br>
 			Your password must contain at least 8 characters.<br>
 		</p>
+		<span id="errorMessage">${errorMessage}</span>
 		<form:form method="POST" modelAttribute="userForm" class="form-signin">
 			<spring:bind path="username">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<form:input type="text" path="username" class="form-control"
-						placeholder="Username" autofocus="true"></form:input>
+						placeholder="Username" autofocus="true" ></form:input>
 					<form:errors path="username"></form:errors>
 				</div>
 			</spring:bind>
