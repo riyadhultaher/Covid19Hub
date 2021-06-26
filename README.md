@@ -26,6 +26,8 @@ the "src/main/resources" folder. Run the selection in HeidiSQL query and the "ca
 You can now run the application in Eclipse as a Spring Boot App. You can navigate to "localhost:8080" in your desired browser and you will be directed to
 the login page. 
 
+Make sure to click on the actual words of the button to access it.
+
 The login page has "Login" and "New User" functionality. If you already created a user account, you can log into your account with your credentials. 
 If not, you can create a new account by inputting a username, password, and initial state. The username must be unique and the password must be at
 least 8 characters.
