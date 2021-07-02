@@ -1,7 +1,7 @@
 COVID 19 HUB
 __________________________________________________________________________________________________________________________________________________________
 
-Application Link: https://covid19hubproject.herokuapp.com/
+Application Link: https://covid19hubproject.herokuapp.com/login
 Github Link: https://github.com/riyadhultaher/Covid19Hub.git
 __________________________________________________________________________________________________________________________________________________________
 
